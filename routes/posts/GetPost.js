@@ -1,17 +1,17 @@
-const Posts = require('../models/Post')
+const Posts = require('../../models/Post');
 
 async function GetPost(req, res, next) {
-    try { 
-        const result = await Posts.find({}, 'title body').sort('-created')
-        res.send(result)
-        
-        next()
+    try {
+        const result = await Posts.find({}, 'title body').sort('-created');
+        res.send(result);
+
+        next();
     } catch (e) {
-        console.log(e)
-        res.status(500).send('Whoops, something went wrong!')
-        
-        next()
+        console.log(e);
+        res.status(500).send('Whoops, something went wrong!');
+
+        next();
     }
 }
 
-module.exports = GetPost
+module.exports = GetPost;
