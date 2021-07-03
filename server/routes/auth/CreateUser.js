@@ -1,0 +1,26 @@
+const { sha512 } = require('crypto-hash');
+const Users = require('../../models/User');
+
+async function CreateUser(req, res, next) {
+    const body = req.body;
+    const existingUsers = await Users.find({ username: req.body.username });
+
+    if (existingUsers.length !== 0) {
+        next(new Error('A user with that name already exists'));
+        return;
+    }
+
+    try {
+        const passwordHash = await sha512(body.password);
+        const result = await Users.create({ ...body, password: passwordHash });
+
+        res.send(result);
+        next();
+    } catch (e) {
+        console.log(e);
+
+        next(new Error('Youre missing something'));
+    }
+}
+
+module.exports = CreateUser;

@@ -8,7 +8,7 @@ async function UpdatePost(req, res, next) {
     console.log(body);
 
     try {
-        const result = await Posts.findByIdAndUpdate(id, { $set: body });
+        const result = await Posts.findByIdAndUpdate(id, { body });
         const updatedResult = await Posts.findById(id);
         res.send({ result, updatedResult });
 
