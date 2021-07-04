@@ -19,7 +19,7 @@ async function CreateUser(req, res, next) {
     } catch (e) {
         console.log(e);
 
-        next(new Error('Youre missing something'));
+        res.status(500).send('Whoops, something went wrong!');
     }
 }
 

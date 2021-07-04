@@ -9,7 +9,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    type: String,
+    type: {
+        type: String,
+        default: 'member',
+    },
     posts: [],
     created: {
         type: Date,

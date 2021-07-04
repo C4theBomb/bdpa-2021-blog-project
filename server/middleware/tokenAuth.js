@@ -2,7 +2,7 @@ const Users = require('../models/User');
 const Tokens = require('../models/Token');
 
 async function tokenAuth(req, res, next) {
-    const token = req.body.token;
+    const token = req.query.token || req.body.token;
     const result = await Tokens.findOne({ token });
     const username = result ? result.username : null;
 
