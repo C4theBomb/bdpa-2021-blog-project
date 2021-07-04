@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useFetch } from '../hooks/useFetch';
 import Post from './Post';
 
-function Home() {
-    const [posts] = useFetch('http://localhost:3000/api');
+function Home({ token }) {
+    const [posts] = useFetch('http://localhost:3000/api', token);
     const [renderedPosts, setRenderedPosts] = useState([]);
     const [page, setPage] = useState(1);
     const itemLimit = 5;
@@ -30,6 +31,7 @@ function Home() {
 
     return (
         <>
+            {!token && <Redirect to='/login' />}
             <Grid container direction='column' justify='flex-start'>
                 {renderedPosts.map((post) => {
                     return <Post key={post._id} object={post} />;

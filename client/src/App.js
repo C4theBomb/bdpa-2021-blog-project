@@ -1,27 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import Home from './components/Home';
 import SinglePost from './components/SinglePost';
 import Create from './components/Create';
 import Update from './components/Update';
 
+import Login from './components/Login';
+import Register from './components/Register';
+
 function App() {
+    const [token, setToken] = useState(null);
+
     return (
         <BrowserRouter>
-            <Header />
+            <Header setToken={setToken} token={token} />
             <Switch>
+                <Route path='/login'>
+                    <Login setToken={setToken} />
+                </Route>
+                <Route path='/register'>
+                    <Register />
+                </Route>
                 <Route path='/' exact>
-                    <Home />
+                    <Home token={token} />
                 </Route>
                 <Route path='/create'>
-                    <Create />
+                    <Create token={token} />
                 </Route>
                 <Route path='/update/:id'>
-                    <Update />
+                    <Update token={token} />
                 </Route>
                 <Route path='/:id'>
-                    <SinglePost />
+                    <SinglePost token={token} />
                 </Route>
                 <Route> {/* 404 Not Found */}</Route>
             </Switch>

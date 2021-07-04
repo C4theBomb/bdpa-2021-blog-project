@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function useFetch(url) {
+function useFetch(url, token) {
     const [data, setData] = useState([
         {
             _id: '',
@@ -13,7 +13,9 @@ function useFetch(url) {
     ]);
 
     async function getData() {
-        await axios.get(url).then((result) => setData(result.data));
+        await axios
+            .get(url, { params: { token } })
+            .then((result) => setData(result.data));
     }
 
     useEffect(() => getData(), []);

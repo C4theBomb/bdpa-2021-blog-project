@@ -5,10 +5,10 @@ import { Paper, TextField, Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { useFetch } from '../hooks/useFetch';
 
-function Update() {
+function Update({ token }) {
     const { id } = useParams();
     const [redirect, setRedirect] = useState(false);
-    const [form, setForm] = useFetch(`http://localhost:3000/api/${id}`);
+    const [form, setForm] = useFetch(`http://localhost:3000/api/${id}`, token);
 
     function handleChange(e) {
         const name = e.target.name;

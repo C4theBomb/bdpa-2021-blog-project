@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Paper, TextField, Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-function Create() {
+function Create({ token }) {
     const [redirect, setRedirect] = useState(false);
     const [form, setForm] = useState({
         title: '',
@@ -19,7 +19,10 @@ function Create() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await axios.post('http://localhost:3000/api/create', form);
+        await axios.post('http://localhost:3000/api/create', {
+            ...form,
+            token,
+        });
         setRedirect(true);
     }
 
