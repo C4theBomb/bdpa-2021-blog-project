@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Paper, TextField, Button } from '@material-ui/core';
 
 function Login({ setToken }) {
     const [redirect, setRedirect] = useState(false);
+    const [passwordStrength, setPasswordStrength] = useState('');
     const [form, setForm] = useState({
         username: '',
         password: '',
     });
+
+    useEffect(() => {
+        setPasswordStrength(() => {
+            if (form.password.length >= 17) {
+                return 'strong';
+            } else if (form.password.length >= 10) {
+                return 'medium';
+            } else {
+                return 'weak';
+            }
+        });
+    }, [form.password]);
 
     function handleChange(e) {
         const name = e.target.name;
@@ -60,6 +73,11 @@ function Login({ setToken }) {
                             variant='contained'
                             style={{ margin: '0.5rem' }}
                             type='submit'
+                            disabled={
+                                passwordStrength === 'weak' ||
+                                form.username === '' ||
+                                form.password === ''
+                            }
                         >
                             Register
                         </Button>
